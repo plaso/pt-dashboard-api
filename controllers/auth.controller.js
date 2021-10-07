@@ -36,6 +36,8 @@ module.exports.loginCb = async (req, res, next) => {
         userName: user.login,
       });
 
+      console.log({ createdUser });
+
       res.json({
         access_token: signToken(createdUser),
       });
