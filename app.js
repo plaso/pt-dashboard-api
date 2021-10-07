@@ -3,7 +3,8 @@ require("dotenv").config();
 const createError = require("http-errors");
 const logger = require("morgan");
 const express = require("express");
-const cors = require("./config/cors.config");
+const cors = require("cors");
+const corsConfig = require("./config/cors.config");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -12,7 +13,7 @@ require("./config/db.config");
 /* Middlewares */
 
 app.use(express.json());
-app.use(cors);
+app.use(cors());
 app.use(logger("dev"));
 
 /* Routes */
