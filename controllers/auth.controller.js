@@ -21,9 +21,15 @@ module.exports.loginCb = async (req, res, next) => {
   try {
     const result = await getAccessToken(req.body.code);
 
+    console.log({ result });
+
     const user = await getUser(result.access_token);
 
+    console.log({ user });
+
     const dbUser = await User.findOne({ githubID: user.id });
+
+    console.log({ dbUser });
 
     if (dbUser) {
       res.json({
