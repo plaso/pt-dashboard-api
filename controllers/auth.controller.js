@@ -21,15 +21,9 @@ module.exports.loginCb = async (req, res, next) => {
   try {
     const result = await getAccessToken(req.body.code);
 
-    console.log({ result });
-
     const user = await getUser(result.access_token);
 
-    console.log({ user });
-
     const dbUser = await User.findOne({ githubID: user.id });
-
-    console.log({ dbUser });
 
     if (dbUser) {
       res.json({
@@ -42,14 +36,12 @@ module.exports.loginCb = async (req, res, next) => {
         userName: user.login,
       });
 
-      console.log({ createdUser });
-
       res.json({
         access_token: signToken(createdUser),
       });
     }
   } catch (e) {
-    next(createError(401));
+    next(createError(e.response.status || e.status));
   }
 };
 
