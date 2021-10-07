@@ -41,7 +41,7 @@ module.exports.loginCb = async (req, res, next) => {
       });
     }
   } catch (e) {
-    next(createError(e.response.status || e.status));
+    next(e);
   }
 };
 
