@@ -30,17 +30,21 @@ module.exports.loginCb = async (req, res, next) => {
         access_token: signToken(dbUser),
       });
     } else {
-      const createdUser = await User.create({
-        displayName: user.name,
-        githubID: user.id,
-        userName: user.login,
-      });
+      try {
+        const createdUser = await User.create({
+          displayName: user.name,
+          githubID: user.id,
+          userName: user.login,
+        });
 
-      console.log({ createdUser });
+        console.log({ createdUser });
 
-      res.json({
-        access_token: signToken(createdUser),
-      });
+        res.json({
+          access_token: signToken(createdUser),
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   } catch (e) {
     next(e);
