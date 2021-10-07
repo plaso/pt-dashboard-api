@@ -5,6 +5,7 @@ const {
   getAccessToken,
   getUser,
   getUserByUsername,
+  getUserByUsernameRepos,
 } = require("../services/GHAuthService");
 
 const signToken = (user) => {
@@ -55,7 +56,8 @@ module.exports.getMe = async (req, res, next) => {
     const user = await User.findById(req.currentUser);
 
     const result = await getUserByUsername(user.userName);
-    res.json(result);
+    const repos = await getUserByUsernameRepos(user.userName);
+    res.json({ ...result, repos });
   } catch (e) {
     next(e);
   }

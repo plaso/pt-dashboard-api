@@ -30,3 +30,9 @@ module.exports.getUser = (accessToken) => {
 module.exports.getUserByUsername = (userName) => {
   return http.get(`https://api.github.com/users/${userName}`);
 };
+
+module.exports.getUserByUsernameRepos = (userName) => {
+  return http.get(`https://api.github.com/users/${userName}/repos`, {
+    params: { sort: "created", per_page: 10 },
+  });
+};
