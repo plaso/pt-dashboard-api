@@ -26,25 +26,23 @@ module.exports.loginCb = async (req, res, next) => {
     const dbUser = await User.findOne({ githubID: user.id });
 
     if (dbUser) {
+      console.log("DBB");
       res.json({
         access_token: signToken(dbUser),
       });
     } else {
-      try {
-        const createdUser = await User.create({
-          displayName: user.name,
-          githubID: user.id,
-          userName: user.login,
-        });
+      console.log("DBB1");
+      const createdUser = await User.create({
+        displayName: user.name,
+        githubID: user.id,
+        userName: user.login,
+      });
 
-        console.log({ createdUser });
+      console.log("DBB2");
 
-        res.json({
-          access_token: signToken(createdUser),
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      res.json({
+        access_token: signToken(createdUser),
+      });
     }
   } catch (e) {
     next(e);
